@@ -1,0 +1,13 @@
+application:
+  name: payment-service
+  environment: dev
+server:
+  port: 8080
+  ssl_enabled: true
+logging:
+  level: INFO
+database:
+  host: db-dev.internal
+  port: 5432
+performance:
+  max_connections: 200
