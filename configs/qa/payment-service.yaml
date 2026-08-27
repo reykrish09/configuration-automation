@@ -1,0 +1,17 @@
+application:
+  name: payment-service
+  environment: qa
+
+server:
+  port: 8080
+  ssl_enabled: true
+
+logging:
+  level: INFO
+
+database:
+  host: db-qa.internal
+  port: 5432
+
+performance:
+  max_connections: 300
