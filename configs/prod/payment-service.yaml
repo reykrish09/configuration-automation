@@ -1,0 +1,17 @@
+application:
+  name: payment-service
+  environment: prod
+
+server:
+  port: 8080
+  ssl_enabled: true
+
+logging:
+  level: WARN
+
+database:
+  host: db-prod.internal
+  port: 5432
+
+performance:
+  max_connections: 500
