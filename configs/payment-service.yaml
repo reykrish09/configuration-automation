@@ -10,4 +10,4 @@ database:
   host: db-dev.internal
   port: 5432
 performance:
-  max_connections: 200
+  max_connections: 300
