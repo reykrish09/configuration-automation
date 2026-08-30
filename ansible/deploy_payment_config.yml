@@ -1,0 +1,15 @@
+- name: Deploy payment service configuration
+  hosts: payment_servers
+  gather_facts: false
+
+  tasks:
+    - name: Create target directory
+      file:
+        path: /tmp/payment-service
+        state: directory
+        mode: '0755'
+
+    - name: Copy approved configuration
+      copy:
+        src: ../configs/prod/payment-service.yaml
+        dest: /tmp/payment-service/config.yaml
