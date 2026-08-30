@@ -1,0 +1,14 @@
+Analyze the following application configuration.
+
+Identify:
+1. Security issues
+2. Configuration inconsistencies
+3. Missing best-practice settings
+4. Performance concerns
+5. Recommendations
+
+Do not assume missing information.
+Return findings with:
+- Issue
+- Severity
+- Recommendation
