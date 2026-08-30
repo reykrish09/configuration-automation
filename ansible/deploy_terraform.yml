@@ -6,9 +6,9 @@
     - name: Terraform init
       command: terraform init
       args:
-        chdir: ../terraform-aws-lab
+        chdir: "{{ playbook_dir }}/../terraform-aws-lab"
 
     - name: Terraform apply
       command: terraform apply -auto-approve
       args:
-        chdir: ../terraform-aws-lab
+        chdir: "{{ playbook_dir }}/../terraform-aws-lab"
