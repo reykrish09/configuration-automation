@@ -1,0 +1,22 @@
+name: Deploy to AAP After PR Approval
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  trigger-aap:
+    if: github.event.review.state == 'approved'
+    runs-on: self-hosted
+
+    steps:
+      - name: Trigger AAP Deployment Workflow
+        env:
+          AAP_TOKEN: ${{ secrets.AAP_TOKEN }}
+        run: |
+          echo "PR approved. Triggering AAP deployment workflow..."
+
+          curl -k --fail-with-body -X POST \
+            -H "Authorization: Bearer $AAP_TOKEN" \
+            -H "Content-Type: application/json" \
+            https://127.0.0.1/api/v2/workflow_job_templates/10/launch/
