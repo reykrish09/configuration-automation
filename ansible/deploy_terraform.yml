@@ -1,0 +1,14 @@
+- name: Deploy Terraform infrastructure
+  hosts: payment_servers
+  gather_facts: false
+
+  tasks:
+    - name: Terraform init
+      command: terraform init
+      args:
+        chdir: "{{ playbook_dir }}/../terraform-aws-lab"
+
+    - name: Terraform apply
+      command: terraform apply -auto-approve
+      args:
+        chdir: "{{ playbook_dir }}/../terraform-aws-lab"

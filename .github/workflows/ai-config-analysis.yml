@@ -1,0 +1,66 @@
+name: AI Configuration Analysis
+
+on:
+  pull_request:
+    paths:
+      - "configs/prod/payment-service.yaml"
+      - "scripts/sanitize_config.py"
+      - "scripts/ai_analyze_config.py"
+      - "scripts/ai_analysis_prompt.txt"
+      - ".github/workflows/ai-config-analysis.yml"
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  ai-analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install pyyaml openai
+
+      - name: Sanitize configuration
+        run: |
+          python scripts/sanitize_config.py
+
+      - name: Run AI configuration analysis
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python scripts/ai_analyze_config.py
+
+      - name: Upload AI report
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-configuration-report
+          path: reports/q16-ai-findings-ai.md
+
+      - name: Add AI findings to Pull Request
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            const report = fs.readFileSync(
+              'reports/q16-ai-findings-ai.md',
+              'utf8'
+            );
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: report
+            });

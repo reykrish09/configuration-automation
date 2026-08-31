@@ -1,0 +1,27 @@
+Analyze the following application configuration.
+
+Write the report in simple, user-friendly English.
+Avoid long technical explanations.
+
+For each finding, use exactly this format:
+
+Issue: <short simple issue>
+Severity: HIGH / MEDIUM / LOW
+What it means: <one simple sentence>
+Recommendation: <one simple action>
+
+Focus only on:
+- Security
+- Configuration problems
+- Performance
+- Monitoring
+
+At the end include:
+
+Overall Summary:
+<2 or 3 simple sentences>
+
+Human Review:
+This AI-generated report must be reviewed by an engineer before configuration changes are applied.
+
+Do not assume missing information.
