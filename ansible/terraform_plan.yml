@@ -1,0 +1,15 @@
+---
+- name: Terraform Plan
+  hosts: payment_servers
+  gather_facts: false
+
+  tasks:
+    - name: Initialize Terraform
+      command: terraform init
+      args:
+        chdir: "{{ playbook_dir }}/../terraform-aws-lab"
+
+    - name: Run Terraform Plan
+      command: terraform plan -out=tfplan
+      args:
+        chdir: "{{ playbook_dir }}/../terraform-aws-lab"
