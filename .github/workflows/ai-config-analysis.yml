@@ -7,6 +7,12 @@ on:
       - "scripts/sanitize_config.py"
       - "scripts/ai_analyze_config.py"
       - "scripts/ai_analysis_prompt.txt"
+      - ".github/workflows/ai-config-analysis.yml"
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
 
 jobs:
   ai-analysis:
@@ -40,3 +46,21 @@ jobs:
         with:
           name: ai-configuration-report
           path: reports/q16-ai-findings-ai.md
+
+      - name: Add AI findings to Pull Request
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            const report = fs.readFileSync(
+              'reports/q16-ai-findings-ai.md',
+              'utf8'
+            );
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: report
+            });
