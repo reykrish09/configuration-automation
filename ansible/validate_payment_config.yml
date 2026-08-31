@@ -1,0 +1,29 @@
+---
+- name: Validate payment service configuration
+  hosts: payment_servers
+  gather_facts: false
+
+  tasks:
+    - name: Check approved configuration exists
+      stat:
+        path: "{{ playbook_dir }}/../configs/prod/payment-service.yaml"
+      register: config_file
+      delegate_to: localhost
+
+    - name: Fail if configuration is missing
+      assert:
+        that:
+          - config_file.stat.exists
+        fail_msg: "Payment service configuration file is missing"
+        success_msg: "Payment service configuration file exists"
+
+    - name: Validate required configuration values
+      vars:
+        payment_config: "{{ lookup('file', playbook_dir + '/../configs/prod/payment-service.yaml') | from_yaml }}"
+      assert:
+        that:
+          - payment_config.application.name is defined
+          - payment_config.application.environment is defined
+          - payment_config.server.port is defined
+        fail_msg: "Required configuration values are missing"
+        success_msg: "Payment configuration validation passed"
