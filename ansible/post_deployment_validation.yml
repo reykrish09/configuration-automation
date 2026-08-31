@@ -1,0 +1,19 @@
+---
+- name: Post Deployment Validation
+  hosts: payment_servers
+  gather_facts: false
+
+  tasks:
+    - name: Check Terraform state
+      command: terraform show
+      args:
+        chdir: "{{ playbook_dir }}/../terraform-aws-lab"
+      register: terraform_state
+      changed_when: false
+
+    - name: Confirm Terraform managed resources
+      assert:
+        that:
+          - "'kkama-terraform-demo-2026-001' in terraform_state.stdout"
+        fail_msg: "Post-deployment validation failed"
+        success_msg: "Post-deployment validation passed"
