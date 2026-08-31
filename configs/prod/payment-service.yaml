@@ -3,7 +3,7 @@ application:
   environment: prod
 
 server:
-  port: 8081
+  port: 70000
   ssl_enabled: true
 
 logging:
