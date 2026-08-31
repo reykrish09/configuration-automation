@@ -3,8 +3,8 @@ application:
   environment: prod
 
 server:
-  port: 70000
-  ssl_enabled: false
+  port: 8081
+  ssl_enabled: true
 
 logging:
   level: WARN
@@ -12,13 +12,6 @@ logging:
 database:
   host: db-prod.internal
   port: 5432
-  username: payment_user
-  password: SuperSecret123
-
-api:
-  endpoint: https://api.internal.example.com
-  token: abcdef123456
 
 performance:
   max_connections: 500
-
