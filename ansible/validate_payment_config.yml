@@ -25,5 +25,7 @@
           - payment_config.application.name is defined
           - payment_config.application.environment is defined
           - payment_config.server.port is defined
+          - payment_config.server.port | int >= 1
+          - payment_config.server.port | int <= 65535
         fail_msg: "Required configuration values are missing"
         success_msg: "Payment configuration validation passed"
