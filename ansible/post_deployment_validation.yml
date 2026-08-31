@@ -4,6 +4,11 @@
   gather_facts: false
 
   tasks:
+    - name: Initialize Terraform
+      command: terraform init
+      args:
+        chdir: "{{ playbook_dir }}/../terraform-aws-lab"
+
     - name: Check Terraform state
       command: terraform show
       args:
